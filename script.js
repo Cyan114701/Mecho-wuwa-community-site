@@ -1,0 +1,5 @@
+const CONFIG={INVITE_URL:'https://discord.gg/G7ZAUPTmb',SERVER_ID:'REPLACE_WITH_DISCORD_SERVER_ID'};
+document.querySelectorAll('[data-invite]').forEach(a=>{a.href=CONFIG.INVITE_URL;a.target='_blank';a.rel='noopener noreferrer'});
+const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('visible')),{threshold:.12});document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
+const g=document.querySelector('.glow');addEventListener('pointermove',e=>{g.style.left=e.clientX+'px';g.style.top=e.clientY+'px';g.style.opacity=1});addEventListener('pointerleave',()=>g.style.opacity=0);
+async function stats(){if(!CONFIG.SERVER_ID||CONFIG.SERVER_ID.includes('REPLACE'))return;try{const r=await fetch(`https://discord.com/api/guilds/${CONFIG.SERVER_ID}/widget.json`);if(!r.ok)throw 0;const d=await r.json();document.querySelector('#members').textContent=(d.presence_count??0).toLocaleString();document.querySelector('#online').textContent=Array.isArray(d.members)?d.members.length.toLocaleString():'—'}catch(e){}}stats();
