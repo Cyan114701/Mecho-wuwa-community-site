@@ -86,10 +86,10 @@ const CHANNELS={
   '01':{bg:'assets/hero.jpg'},
   '02':{bg:'assets/hero2.jpg'},
   '03':{bg:'assets/hero3.jpg'},
-  '04':{bg:'assets/hero2(2).jpg'},
-  '05':{bg:'assets/hero.jpg'},
-  '06':{bg:'assets/hero3.jpg'},
-  '07':{bg:'assets/hero2(2).jpg'}
+  '04':{bg:'assets/hero4.jpg'},
+  '05':{bg:'assets/hero5.jpg'},
+  '06':{bg:'assets/hero6.jpg'},
+  '07':{bg:'assets/hero7.jpg'}
 };
 
 let currentChannel='01';
