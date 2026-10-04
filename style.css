@@ -480,3 +480,10 @@ footer{padding:28px 6vw;background:#100c09;color:#8e8274;display:flex;gap:22px;a
     white-space:normal;
   }
 }
+
+/* ABOUT COMMUNITY：スマホのみタイトルを少し小さくする */
+@media(max-width:600px){
+  .head h2{
+    font-size:36px;
+  }
+}
