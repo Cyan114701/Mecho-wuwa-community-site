@@ -1,3 +1,692 @@
+
+過去のメッセージを読み込み中…
+
+index (1).html
+HTML
+
+script (1).js
+コード
+
+style (5).css
+コード
+pc版とスマホ版で「JP / EN COMMUNITY」の欄の画像が一致していません。
+pc版の画像をスマホ版に反映するにはどこを変更すればいいですか？
+はい、原因はCSS側にあります。
+PC版とスマホ版で .splitImg の背景画像を別々に指定しているためです。
+
+現在の設定
+PC版では、
+
+.splitImg{
+  min-height:590px;
+  background:linear-gradient(90deg,transparent,#eee3d2),url('assets/page2.jpg') center/cover
+}
+となっており、page2.jpg が使われています。
+
+一方、スマホ向けの @media(max-width:900px) で、
+
+.splitImg{
+  min-height:390px;
+  background:linear-gradient(180deg,transparent,#eee3d2),url('assets/hero.jpg') center/cover
+}
+となっているため、スマホでは hero.jpg に切り替わっています。
+
+PC版と同じ page2.jpg にする
+style.css の 46行目付近にある、
+
+@media(max-width:900px){
+  header nav{display:none}
+  ...
+  .splitImg{
+    min-height:390px;
+    background:linear-gradient(180deg,transparent,#eee3d2),url('assets/hero.jpg') center/cover
+  }
+  ...
+}
+この hero.jpg を page2.jpg に変更してください。
+
+変更後
+@media(max-width:900px){
+  header nav{display:none}
+  .headerRight{gap:8px}
+  .cards{grid-template-columns:1fr 1fr}
+  .split{grid-template-columns:1fr}
+
+  .splitImg{
+    min-height:390px;
+    background:linear-gradient(180deg,transparent,#eee3d2),url('assets/page2.jpg') center/cover
+  }
+
+  .splitText{padding:65px 8vw}
+  .eventIn{grid-template-columns:1fr;gap:15px}
+  .staffGrid{grid-template-columns:1fr 1fr}
+}
+さらに注意点
+現在のCSSには、その後にも
+
+@media(max-width:900px){
+  .split{grid-template-columns:1fr}
+  .splitText{padding:65px 8vw}
+  ...
+}
+という別の @media(max-width:900px) があります。
+
+こちらには .splitImg の画像指定がないので、変更する必要はありません。
+
+つまり今回変更するのは hero.jpg → page2.jpg の1か所だけです。
+
+これで、
+
+PC：page2.jpg
+スマホ：page2.jpg
+となり、同じ画像が表示されます。
+
+ユーザーの添付画像
+ユーザーの添付画像
+これはスマホ版でみたABOUT THE COMMUNITYの欄ですが、以下の修正箇所に従い、コードの変更箇所を教えてください。
+【修正箇所】
+・タイトル文字が適正箇所で改行されていないので、正しい位置で改行されるところまでスマホ版のみ文字サイズを小さくしたい。
+・(質問)スマホ版のdesc文字の改行箇所はpc版と棲み分けすることはできるか？
+はい、できます。今回のファイルを見ると、PC版とスマホ版で別々の改行位置を指定できます。
+
+① タイトルをスマホ版だけ少し小さくする
+現在のタイトル全般は、
+
+.head h2,
+.splitText h2,
+.event h2,
+.join h2{
+  font:600 clamp(40px,5vw,70px)/.98 'Cormorant Garamond',serif;
+  margin:12px 0 18px;
+}
+となっており、スマホでも 最小40px です。
+
+そのため、スマホでは
+
+鳴潮の「好き」を極め
+る
+コミュニティ。
+
+のように「る」だけが次の行へ送られています。
+
+CSSのスマホ部分に追加
+現在の
+
+@media(max-width:600px){
+の中に、以下を追加してください。
+
+.head h2{
+  font-size:36px;
+}
+つまり、
+
+@media(max-width:600px){
+  .head h2{
+    font-size:36px;
+  }
+
+  .cards p{font-size:13px}
+  .cards h3{font-size:25px}
+  .splitText h2{font-size:clamp(38px,10vw,54px)}
+  ...
+}
+とします。
+
+PC版のタイトルサイズは一切変わりません。
+
+36pxでまだ「る」が入らなければ、
+
+.head h2{
+  font-size:34px;
+}
+まで下げればかなり余裕ができます。
+
+② 「desc」の改行位置をPC・スマホで分けられる？
+はい、できます。
+
+むしろ今回はこちらをおすすめします。
+
+現在の about.desc は、
+
+'about.desc':'攻略のさらなる高みへの挑戦から、こだわりの写真、気軽な雑談まで、<br>「好き」を持ち寄って遊べるDiscordコミュニティです。',
+となっているため、<br> の位置はPC・スマホ共通です。
+
+これを PC専用改行・スマホ専用改行 にできます。
+
+おすすめの方法
+script.js の about.desc を、
+
+'about.desc':'攻略のさらなる高みへの挑戦から、こだわりの写真、気軽<span class="sp-only"><br></span>な雑談まで、<span class="pc-only"><br></span>「好き」を持ち寄って遊べるDiscordコミュニティです。',
+に変更します。
+
+そして style.css に、
+
+.sp-only{
+  display:none;
+}
+
+.pc-only{
+  display:inline;
+}
+
+@media(max-width:600px){
+  .pc-only{
+    display:none;
+  }
+
+  .sp-only{
+    display:inline;
+  }
+}
+を追加します。
+
+こうなります
+PC版
+
+攻略のさらなる高みへの挑戦から、こだわりの写真、気軽な雑談まで、
+「好き」を持ち寄って遊べるDiscordコミュニティです。
+スマホ版
+
+攻略のさらなる高みへの挑戦から、こだわりの写真、気軽
+な雑談まで、「好き」を持ち寄って遊べるDiscordコミュニティです。
+というように、PCとスマホで意図的に違う位置で改行できます。
+
+ただし、今回のスマホ画面なら
+私は以下の構成をおすすめします。
+
+script.js
+'about.desc':'攻略のさらなる高みへの挑戦から、こだわりの写真、気軽<span class="sp-only"><br></span>な雑談まで、<span class="pc-only"><br></span>「好き」を持ち寄って遊べるDiscordコミュニティです。',
+style.css
+.sp-only{
+  display:none;
+}
+
+.pc-only{
+  display:inline;
+}
+
+@media(max-width:600px){
+
+  /* ABOUTタイトル */
+  .head h2{
+    font-size:36px;
+  }
+
+  /* ABOUT説明文の改行 */
+  .pc-only{
+    display:none;
+  }
+
+  .sp-only{
+    display:inline;
+  }
+
+}
+これなら、
+
+ABOUTタイトルだけスマホで小さくする
+PCのタイトルサイズは変更しない
+ABOUT説明文の改行位置をPC/スマホで分離
+他のセクションのタイトルには影響させない
+という形になります。
+
+なお、現在のHTMLではABOUTのタイトル・説明文は data-i18n で script.js の内容に置き換えられる構造なので、改行を分ける場合はHTMLではなく script.js 側の about.desc を変更するのが適切です。
+
+
+style (6).css
+コード
+上記内容すべて具体的にどこを変更するのか行まで含めて教えてください
+はい。今回の修正は ①スマホ版タイトルの文字サイズ と ②PC/スマホで説明文の改行位置を分ける の2点です。
+
+現在の style (6).css を確認すると、すでにかなり後から追加されたCSSがあるため、既存部分を大きく変更せず、末尾に追加する方法が一番安全です。
+
+① スマホ版の「鳴潮の"好き"を極める」の文字サイズを小さくする
+現在、タイトルの基本サイズはここです。
+
+style (6).css 28行目
+
+.head h2,.splitText h2,.event h2,.join h2{font:600 clamp(40px,5vw,70px)/.98 'Cormorant Garamond',serif;margin:12px 0 18px}
+
+ここで .head h2 の最小サイズが 40px になっています。
+
+スマホではこれが大きいため、
+
+鳴潮の"好き"を極め
+る
+コミュニティ。
+
+のように「る」だけが次の行へ落ちています。
+
+変更方法
+今回は既存のCSSを変更するより、ファイル末尾に追加してください。
+
+style (6).css の一番最後、現在の 478～480行付近の後ろに、以下を追加します。
+
+/* ABOUT COMMUNITY：スマホのみタイトルを少し小さくする */
+@media(max-width:600px){
+  .head h2{
+    font-size:36px;
+  }
+}
+
+つまり、ファイル末尾はこうなります。
+
+@media(max-width:900px){
+  .eventCopy h2{
+    white-space:normal;
+  }
+}
+
+/* ABOUT COMMUNITY：スマホのみタイトルを少し小さくする */
+@media(max-width:600px){
+  .head h2{
+    font-size:36px;
+  }
+}
+
+これでどうなるか
+現在：
+
+鳴潮の"好き"を極め
+る
+コミュニティ。
+↓
+
+目標：
+
+鳴潮の"好き"を極める
+コミュニティ。
+になります。
+
+なお、script.js側ではすでに
+
+'about.title':'鳴潮の<em>"好き"</em>を極める<br>コミュニティ。',
+
+となっているため、「コミュニティ。」の前の改行は既に指定されています。
+
+つまり今回必要なのは、<br>を変更することではなく、「る」まで1行に収まるようにスマホの文字サイズを小さくすることです。
+
+② スマホ版とPC版で説明文の改行位置を分ける
+これは可能です。
+
+現在のHTMLでは、説明文が
+
+index.html 70行目付近
+
+<p data-i18n="about.desc">攻略のさらなる高みへの挑戦から、こだわりの写真、気軽な雑談まで、<br>「好き」を持ち寄って遊べるDiscordコミュニティです。</p>
+
+となっています。
+
+この <br> はPCでもスマホでも同じ場所で改行されます。
+
+一方、希望しているのは、
+
+PC
+攻略のさらなる高みへの挑戦から、こだわりの写真、気軽な雑談まで、
+「好き」を持ち寄って遊べるDiscordコミュニティです。
+スマホ
+攻略のさらなる高みへの挑戦から、こだわりの写真、気軽
+な雑談まで、
+「好き」を持ち寄って遊べるDiscordコミュニティです。
+のように、PCとスマホで改行位置を別々にすることですね。
+
+これはできます。
+
+③ script.js の日本語 about.desc を変更
+現在の script.js では、11～12行目付近に
+
+'about.title':'鳴潮の<em>"好き"</em>を極める<br>コミュニティ。',
+'about.desc':'攻略のさらなる高みへの挑戦から、こだわりの写真、気軽な雑談まで、<br>「好き」を持ち寄って遊べるDiscordコミュニティです。',
+
+があります。
+
+このうち about.descだけ変更します。
+
+現在
+'about.desc':'攻略のさらなる高みへの挑戦から、こだわりの写真、気軽な雑談まで、<br>「好き」を持ち寄って遊べるDiscordコミュニティです。',
+
+↓ これに変更
+'about.desc':'攻略のさらなる高みへの挑戦から、こだわりの写真、気軽<span class="sp-only"><br></span>な雑談まで、<span class="pc-only"><br></span>「好き」を持ち寄って遊べるDiscordコミュニティです。',
+
+重要なのは、
+
+<span class="sp-only"><br></span>
+
+と
+
+<span class="pc-only"><br></span>
+
+です。
+
+④ style (6).css に改行制御CSSを追加
+先ほどのタイトル用CSSと同じく、style (6).cssの一番最後に追加してください。
+
+最終的には以下を追加します。
+
+/* ABOUT COMMUNITY：スマホのみタイトルを少し小さくする */
+@media(max-width:600px){
+  .head h2{
+    font-size:36px;
+  }
+}
+
+/* ABOUT COMMUNITY：PC / スマホで説明文の改行位置を分離 */
+.sp-only{
+  display:none;
+}
+
+.pc-only{
+  display:inline;
+}
+
+@media(max-width:600px){
+  .pc-only{
+    display:none;
+  }
+
+  .sp-only{
+    display:inline;
+  }
+}
+
+⑤ 変更後の全体像
+今回、style (6).css の既存コードは基本的に触りません。
+
+ファイルの一番最後に以下を丸ごと追加するだけでOKです。
+
+/* ABOUT COMMUNITY：スマホのみタイトルを少し小さくする */
+@media(max-width:600px){
+  .head h2{
+    font-size:36px;
+  }
+}
+
+/* ABOUT COMMUNITY：PC / スマホで説明文の改行位置を分離 */
+.sp-only{
+  display:none;
+}
+
+.pc-only{
+  display:inline;
+}
+
+@media(max-width:600px){
+  .pc-only{
+    display:none;
+  }
+
+  .sp-only{
+    display:inline;
+  }
+}
+
+⑥ script.jsで変更する場所
+script.js の日本語翻訳部分を探してください。
+
+現在：
+
+'about.title':'鳴潮の<em>"好き"</em>を極める<br>コミュニティ。',
+'about.desc':'攻略のさらなる高みへの挑戦から、こだわりの写真、気軽な雑談まで、<br>「好き」を持ち寄って遊べるDiscordコミュニティです。',
+
+about.title は変更不要です。
+
+about.descだけ、
+
+'about.desc':'攻略のさらなる高みへの挑戦から、こだわりの写真、気軽<span class="sp-only"><br></span>な雑談まで、<span class="pc-only"><br></span>「好き」を持ち寄って遊べるDiscordコミュニティです。',
+
+に変更してください。
+
+⑦ index.html は変更する必要がある？
+今回の方法なら変更不要です。
+
+現在の
+
+<p data-i18n="about.desc">攻略のさらなる高みへの挑戦から、こだわりの写真、気軽な雑談まで、<br>「好き」を持ち寄って遊べるDiscordコミュニティです。</p>
+
+はそのままで大丈夫です。
+
+理由は、script.jsの about.desc が読み込まれる際に、現在のHTMLの文章がI18Nの文章に置き換えられる構造だからです。
+
+⑧ 最終的な表示
+これで日本語版は以下のようになります。
+
+PC
+ABOUT THE COMMUNITY
+
+鳴潮の"好き"を極める
+コミュニティ。
+
+攻略のさらなる高みへの挑戦から、こだわりの写真、気軽な雑談まで、
+「好き」を持ち寄って遊べるDiscordコミュニティです。
+スマホ
+ABOUT THE COMMUNITY
+
+鳴潮の"好き"を極める
+コミュニティ。
+
+攻略のさらなる高みへの挑戦から、こだわりの写真、気軽
+な雑談まで、
+「好き」を持ち寄って遊べるDiscordコミュニティです。
+変更するファイルまとめ
+ファイル	場所	変更
+style (6).css	末尾に追加	スマホタイトル36px＋PC/スマホ改行制御
+script.js	about.desc	<span>によるPC/スマホ別改行
+index.html	変更なし	そのままでOK
+なお、現在のCSSでは .head h2 の基本サイズが clamp(40px,5vw,70px)、スマホ用には .splitText h2 しか個別指定されていないため、今回の .head h2 { font-size:36px; } は ABOUTのタイトルだけに効きます。
+ また、現在のスマホ用CSSにも .head h2 の指定はありません。
+
+まずは36pxで試すのがおすすめです。 もし実機で「鳴潮の"好き"を極める」がまだ1行に収まらなければ、36px → 34px にするだけで調整できます。
+
+ユーザーの添付画像
+
+style (7).css
+コード
+
+script (2)(1).js
+コード
+
+index (2).html
+HTML
+以下はスマホ版のみを対象とした変更依頼事項を記載しています。
+スマホ版のみが修正されるように添付のファイルを修正してください。
+
+###スマホ版のみ各欄のメインタイトル文字を全て36pxに変更してください。
+###「CHANNEL GUIDE」欄について
+・スマホ版のみ画像の通り、右側の紹介文と画像が完全に見切れてしまっているので、スマホ版に対応したレイアウトに変更してください。レイアウトの変更はお任せします。
+
+41s考えました
+
+
+
+
+
+修正しました。今回の修正版では、PC版には影響しないよう、変更をすべて @media(max-width:600px) 内に限定しています。
+
+修正版 style_mobile_fixed.css をダウンロード
+
+今回の変更内容
+1. スマホ版の各セクションのメインタイトルを36pxに統一
+
+対象は以下です。
+
+ABOUT THE COMMUNITY
+JP / EN COMMUNITY
+CHANNEL GUIDE
+GALLERY
+COMMUNITY EVENTS
+STAFF
+JOIN THE COMMUNITY
+追加したCSSは：
+
+@media(max-width:600px){
+  .head h2,
+  .splitText h2,
+  .event h2,
+  .join h2{
+    font-size:36px;
+  }
+}
+
+PC側の既存サイズは変更していません。元々PC側は .head h2,.splitText h2,.event h2,.join h2 に clamp(40px,5vw,70px) が設定されています。
+
+2. CHANNEL GUIDEをスマホでは完全な縦型レイアウトに変更
+
+現在の問題は、channelExplorer のPC用2カラム指定が後から適用され、スマホでも
+
+┌───────────────┬──────┐
+│ チャンネル一覧 │画像  │
+│ チャンネル一覧 │紹介文│
+│ チャンネル一覧 │      │
+└───────────────┴──────┘
+のようになっていたことです。
+
+修正版ではスマホだけ、
+
+CHANNEL GUIDE
+
+居場所が見つかる。
+仲間が見つかる。
+
+説明文
+
+┌──────────────────┐
+│ 01  雑談        ＋ │
+├──────────────────┤
+│ 02  ダジャレ部屋 ＋ │
+├──────────────────┤
+│ 03  鳴潮の質問   ＋ │
+├──────────────────┤
+│ 04  研究学会     ＋ │
+├──────────────────┤
+│ ...              │
+└──────────────────┘
+
+┌──────────────────┐
+│                  │
+│    紹介画像       │
+│                  │
+│ 01               │
+│ 雑談             │
+│ 紹介文            │
+└──────────────────┘
+という一覧→紹介パネルの縦並びになります。
+
+スマホ用には、
+
+.channelExplorer{
+  grid-template-columns:1fr;
+  gap:24px;
+  width:100%;
+  max-width:none;
+}
+
+を指定しています。
+
+HTML上でもCHANNEL GUIDEは .channelExplorer の中に「チャンネル一覧」と「紹介パネル」が分かれている構造なので、この方法で既存のJavaScriptによるクリック切り替えもそのまま維持できます。
+
+さらに重要な点
+元のCSSには、スマホ用ギャラリー部分に
+
+@media(max-width:600px){
+  ...
+  @media(max-width:600px){
+
+という重複した入れ子のメディアクエリが存在していました。
+
+今回これも整理して、
+
+@media(max-width:600px){
+  ...
+}
+
+という正常な構造に修正しています。
+
+これによって、後続のCSSが意図せずスマホ用メディアクエリの中に入り続ける状態も解消しています。
+
+JS (script.js) と HTML (index.html) は今回変更していません。
+CHANNEL GUIDEの切り替え処理も既存の renderChannel() をそのまま利用できます。
+ 
+
+
+style_mobile_fixed.css
+コード
+スマホ版のみ以下の文字は元のサイズに戻してください。
+
+ABOUT THE COMMUNITY
+JP / EN COMMUNITY
+CHANNEL GUIDE
+GALLERY
+COMMUNITY EVENTS
+STAFF
+JOIN THE COMMUNITY
+スマホ版のみ以下の文字を36pxに変更して再度ファイル出力してください。
+
+また、スマホ版のEnglishの該当する部分も同様に36pxに変更してください。
+
+・「鳴潮の"好き"を極めるコミュニティ。」
+
+・「言語の壁を越え、共にソラリスへ。」
+
+・「居場所が見つかる。仲間が見つかる。」
+
+・「世界を切り取る。」
+
+・「「好き」を持ち寄り、 人と繋がる。」
+
+・「コミュニティスタッフ」
+
+・「さぁ、コミュニティに 参加しよう！」
+
+
+修正して再出力しました。
+
+修正版 style_mobile_fixed_v2.css をダウンロード
+
+今回の仕様
+スマホ版のみ、以下のメインタイトル7箇所を36pxにしています。
+
+鳴潮の"好き"を極めるコミュニティ。
+言語の壁を越え、共にソラリスへ。
+居場所が見つかる。仲間が見つかる。
+世界を切り取る。
+「好き」を持ち寄り、人と繋がる。
+コミュニティスタッフ
+さぁ、コミュニティに参加しよう！
+CSSでは対象を明確に限定しています。
+
+@media(max-width:600px){
+  #about .head h2,
+  .splitText h2,
+  #channels .head h2,
+  #gallery .head h2,
+  .event h2,
+  #staff .head h2,
+  .join h2{
+    font-size:36px;
+  }
+}
+
+一方、
+
+ABOUT THE COMMUNITY
+JP / EN COMMUNITY
+CHANNEL GUIDE
+GALLERY
+COMMUNITY EVENTS
+STAFF
+JOIN THE COMMUNITY
+などのセクション見出し（eyebrow）は変更せず、元のサイズを維持しています。
+
+また、English版についても、HTML上では同じ各 <h2> 要素に日本語/英語が切り替わる構造になっているため、日本語・Englishの両方で該当するメインタイトルがスマホ36pxになります。script.js は変更していません。
+
+PC版のサイズ・レイアウトには変更を加えていません。 
+
+
+style_mobile_fixed_v2.css
+コード
+
+
+
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap');
 :root{--paper:#f6efe3;--ink:#1a130d;--dark:#17110c;--gold:#b77b38;--cream:#fff7e4;--muted:#817466}
 *{box-sizing:border-box}
@@ -94,396 +783,3 @@ footer{padding:28px 6vw;background:#100c09;color:#8e8274;display:flex;gap:22px;a
   background:transparent;
   color:#fff;
   text-align:left;
-  cursor:pointer;
-  transition:.25s ease;
-  font-family:inherit;
-}
-.channelItem:hover,
-.channelItem.active{
-  background:linear-gradient(90deg,#ffffff12,transparent);
-  padding-left:20px;
-}
-.channelItem b{
-  font:italic 18px Georgia,serif;
-  color:#c99b5c;
-}
-.channelItem span{
-  font:600 25px 'Cormorant Garamond',serif;
-}
-.channelItem em{
-  font-style:normal;
-  color:#d8b475;
-  font-size:18px;
-  transition:transform .25s ease;
-}
-.channelItem.active em{transform:rotate(45deg)}
-
-.channelPreview{
-  position:relative;
-  min-height:500px;
-  overflow:hidden;
-  border:1px solid #fff2;
-  background:#21170f;
-  isolation:isolate;
-}
-.channelPreviewBg{
-  position:absolute;
-  inset:0;
-  background-position:center;
-  background-size:cover;
-  transition:background-image .35s ease,transform .7s ease;
-  transform:scale(1.01);
-}
-.channelPreview:hover .channelPreviewBg{transform:scale(1.035)}
-.channelPreviewVeil{
-  position:absolute;
-  inset:0;
-  background:linear-gradient(90deg,#0b0806dd 0%,#0b080688 55%,#0b080633 100%);
-  z-index:1;
-}
-.channelPreviewContent{
-  position:absolute;
-  z-index:2;
-  inset:auto auto 42px 42px;
-  width:min(30em,calc(100% - 84px));
-}
-.channelPreviewContent .eyebrow{
-  color:#d8b475;
-  margin-bottom:12px;
-}
-.channelPreviewContent h3{
-  font:600 clamp(34px,4vw,52px)/1 'Cormorant Garamond',serif;
-  margin:0 0 20px;
-}
-.channelPreviewContent p{
-  margin:0;
-  max-width:30em;
-  font-size:14px;
-  line-height:2;
-  color:#fff;
-  text-shadow:0 2px 8px #000;
-}
-
-/* GALLERY base styles; JavaScript controls the continuous loop */
-.galleryViewport{
-  max-width:100%;
-  overflow:hidden;
-  position:relative;
-  padding:8px 0 18px;
-  mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
-}
-.galleryTrack{
-  display:flex;
-  width:max-content;
-  will-change:transform;
-  animation:galleryMarquee 95s linear infinite;
-}
-.gallerySet{
-  display:flex;
-  flex:none;
-  gap:14px;
-  padding-right:14px;
-}
-.gallerySet img{
-  flex:none;
-  width:300px;
-  height:205px;
-  object-fit:cover;
-  display:block;
-  border-radius:2px;
-}
-@keyframes galleryMarquee{
-  from{transform:translateX(0)}
-  to{transform:translateX(-50%)}
-}
-.galleryViewport:hover .galleryTrack{animation-play-state:paused}
-
-/* COMMUNITY EVENTS: title + description on left, one photo on right */
-.eventIn{
-  grid-template-columns:minmax(0,1fr) minmax(360px,.9fr);
-  gap:65px;
-}
-.eventCopy{
-  min-width:0;
-}
-.eventCopy h2{
-  max-width:760px;
-}
-.eventCopy>p:last-child{
-  color:#dfd1bd;
-  font-size:14px;
-  line-height:2;
-  max-width:700px;
-  margin:28px 0 0;
-}
-.eventPhoto{
-  min-height:430px;
-  background:
-    linear-gradient(90deg,#25170c44,#25170c00),
-    url('assets/page3.jpg') center/cover no-repeat;
-  border:1px solid #d3a15d44;
-}
-
-/* STAFF: exactly two people */
-.staffGrid{
-  max-width:760px;
-  grid-template-columns:repeat(2,1fr);
-}
-
-/* Mobile */
-@media(max-width:1100px){
-  .split{grid-template-columns:minmax(0,.85fr) minmax(480px,1.15fr)}
-  .channelExplorer{grid-template-columns:minmax(250px,.72fr) minmax(0,1.28fr)}
-}
-@media(max-width:900px){
-  .split{grid-template-columns:1fr}
-  .splitText{padding:65px 8vw}
-  .channelExplorer{grid-template-columns:1fr;gap:18px}
-  .channelPreview{min-height:480px}
-  .channelPreviewContent{inset:auto 28px 32px;width:calc(100% - 56px)}
-  .eventIn{grid-template-columns:1fr;gap:28px}
-  .eventPhoto{min-height:360px}
-}
-@media(max-width:600px){
-  .cards p{font-size:13px}
-  .cards h3{font-size:25px}
-  .splitText h2{font-size:clamp(38px,10vw,54px)}
-  .channelItem{grid-template-columns:42px 1fr 22px;min-height:68px}
-  .channelItem span{font-size:23px}
-  .channelPreview{min-height:520px}
-  .channelPreviewContent p{font-size:13px;line-height:1.9}
-  .galleryTrack{animation-duration:80s}
-  .gallerySet img{width:250px;height:175px}
-  .eventPhoto{min-height:300px}
-  .staffGrid{grid-template-columns:1fr}
-}
-
-
-/* ===== Site update 8 ===== */
-.splitText{padding-right:clamp(4vw,6vw,90px)}
-.splitText h2{max-width:820px}
-
-/* CHANNEL GUIDE: 7 channels */
-.channelExplorer{grid-template-columns:minmax(320px,.8fr) minmax(0,1.2fr)}
-.channelItem{min-height:74px}
-
-/* GALLERY: up to 30 source images, automatically repeated for seamless looping */
-.galleryViewport{
-  cursor:grab;
-  touch-action:pan-y;
-  user-select:none;
-}
-.galleryViewport.is-dragging{cursor:grabbing}
-.galleryTrack{
-  animation:none !important;
-  transform:translate3d(0,0,0);
-}
-.gallerySet{gap:21px;padding-right:21px}
-.gallerySet img{
-  width:656px;
-  height:369px;
-  aspect-ratio:16 / 9;
-  object-fit:cover;
-  object-position:center;
-  cursor:zoom-in;
-  flex:none;
-  user-select:none;
-  -webkit-user-drag:none;
-}
-/* ============================================================
-   Gallery protection
-   ============================================================ */
-
-.galleryViewport,
-.galleryViewport img,
-.galleryLightbox,
-.galleryLightbox img{
-  -webkit-user-select:none;
-  user-select:none;
-  -webkit-touch-callout:none;
-}
-
-.galleryViewport img,
-.galleryLightbox img{
-  -webkit-user-drag:none;
-  user-drag:none;
-}
-
-.galleryViewport::selection,
-.galleryViewport img::selection,
-.galleryLightbox::selection,
-.galleryLightbox img::selection{
-  background:transparent;
-}
-.gallerySet img:active{cursor:grabbing}
-
-/* Gallery lightbox */
-.galleryLightbox{
-  position:fixed;
-  inset:0;
-  z-index:9999;
-  display:grid;
-  place-items:center;
-  padding:5vh 5vw;
-  background:rgba(10,7,4,.88);
-  opacity:0;
-  transition:opacity .18s ease;
-  cursor:zoom-out;
-}
-.galleryLightbox.visible{opacity:1}
-.galleryLightbox img{
-  max-width:90vw;
-  max-height:88vh;
-  width:auto;
-  height:auto;
-  object-fit:contain;
-  box-shadow:0 20px 70px rgba(0,0,0,.55);
-  cursor:default;
-}
-.galleryLightboxClose{
-  position:absolute;
-  top:22px;
-  right:28px;
-  width:44px;
-  height:44px;
-  border:1px solid rgba(255,255,255,.45);
-  border-radius:50%;
-  background:rgba(0,0,0,.25);
-  color:#fff;
-  font-size:30px;
-  line-height:1;
-  cursor:pointer;
-}
-
-/* COMMUNITY EVENTS: full-height right-edge photo, softly blended into the background toward the left. */
-.eventIn{
-  max-width:none;
-  width:100%;
-  grid-template-columns:minmax(0,1fr) minmax(420px,48%);
-  gap:0;
-  align-items:stretch;
-  padding-left:6vw;
-}
-.eventCopy{
-  min-width:0;
-  padding:0 6vw 0 0;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-}
-.eventCopy h2{
-  max-width:none;
-  width:100%;
-  font-size:clamp(42px,5vw,70px);
-}
-.eventCopy>p:last-child{
-  max-width:1080px;
-  margin:28px 0 0;
-}
-.eventPhoto{
-  position:relative;
-  min-height:0;
-  height:100%;
-  align-self:stretch;
-  border:0;
-  background:url('assets/page3.jpg') center/cover no-repeat;
-  -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.08) 12%,#000 43%,#000 100%);
-  mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.08) 12%,#000 43%,#000 100%);
-}
-.eventPhoto::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(90deg,#25170c 0%,#25170caa 20%,transparent 56%);
-  pointer-events:none;
-}
-
-@media(max-width:900px){
-  .eventIn{
-    grid-template-columns:1fr;
-    padding-left:0;
-  }
-  .eventCopy{
-    padding:0;
-  }
-  .eventPhoto{
-    min-height:360px;
-    height:360px;
-  }
-}
-@media(max-width:600px){
-  .gallerySet{gap:14px;padding-right:14px}
- @media(max-width:600px){
-  .gallerySet{
-    gap:14px;
-    padding-right:14px;
-  }
-
-  .gallerySet img{
-    width:360px;
-    height:202.5px;
-    aspect-ratio:16 / 9;
-    object-fit:cover;
-    object-position:center;
-  }
-
-  .galleryLightbox{
-    padding:4vh 3vw;
-  }
-
-  .galleryLightbox img{
-    max-width:94vw;
-    max-height:86vh;
-  }
-
-  .galleryLightboxClose{
-    top:14px;
-    right:14px;
-  }
-}
-
-/* Keep the intended COMMUNITY EVENTS line break on larger screens. */
-@media(min-width:901px){
-  .eventCopy h2 br{display:block}
-}
-
-
-/* ===== Site update 9: COMMUNITY EVENTS title/photo refinement ===== */
-@media(min-width:901px){
-  .eventIn{
-    grid-template-columns:minmax(0,35fr) minmax(0,65fr);
-    gap:0;
-    padding-left:0;
-    margin-right:-6vw;
-    min-height:0px;
-  }
-  .eventCopy{
-    padding-right:3vw;
-  }
-  .eventCopy h2{
-    max-width:none;
-    width:100%;
-    white-space:nowrap;
-  }
-  .eventPhoto{
-    width:100%;
-    min-width:100%;
-    min-height:620px;
-    height:100%;
-    justify-self:end;
-  }
-}
-
-@media(max-width:900px){
-  .eventCopy h2{
-    white-space:normal;
-  }
-}
-
-/* ABOUT COMMUNITY：スマホのみタイトルを少し小さくする */
-@media(max-width:600px){
-  .head h2{
-    font-size:36px;
-  }
-}
