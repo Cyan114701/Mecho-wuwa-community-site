@@ -1,80 +1,6 @@
 
 過去のメッセージを読み込み中…
 
-index(2).html
-HTML
-html側の変更だけで解決できるならそうしたいです。コード添付します
-確認しました。HTMLを見る限り、画像を最上端に配置するためにHTML側だけで対応することは可能です。
-
-ただし、今回の余白の原因として一番気になる箇所があります。
-
-1. <head> に不要な文字があります
-現在9行目が、
-
-＜<meta name="robots" content="index, follow">
-となっています。
-
-先頭の 全角「＜」 が不要です。
-
-これを、
-
-<meta name="robots" content="index, follow">
-にしてください。
-
-2. <body> を明示的に余白ゼロにする
-現在は、
-
-<body>
-となっています。
-
-ここを、
-
-<body style="margin:0; padding:0;">
-に変更してください。
-
-これなら CSSファイルを変更せずHTMLだけで対応できます。
-
-変更後
-つまり、冒頭部分をこうします。
-
-<!doctype html>
-<html lang="ja">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#17110b">
-<meta name="google-site-verification" content="2xAaTXXULLNE4HNLa_AoaJvWH5uHBc2iRyTrtDw8fE8" />
-<meta name="description" content="WUWA COMMUNITY — 鳴潮を愛する人が集うDiscordコミュニティ。">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://mecho-wuwa-community-site.mecho-wuwa-community.workers.dev/">
-<title>WUWA COMMUNITY | 鳴潮 Discord Community</title>
-そして、
-
-</head>
-<body style="margin:0; padding:0;">
-とします。
-
-ただし、重要な点
-実は現在の style.css に既に
-
-body{margin:0; ...}
-があります。
-
-そのため、body のデフォルト余白が原因なら既に解消されています。
-
-なので今回のスクリーンショットの赤枠部分については、私はまず
-
-① 全角「＜」を削除 → ② HTMLを再デプロイ
-
-をおすすめします。
-
-特にHTML上ではこの ＜ が明らかな不要文字なので、先に直す価値があります。
-
-なお、<main id="top"> → <section class="hero"> の構造自体には、上部に余白を作るような要素はありません。
-
-この2か所だけ変更して、それでも赤枠の余白が残る場合は、CSS側を変更する必要がある可能性が高いです。
-
-
 index (1).html
 HTML
 
@@ -762,6 +688,63 @@ PC版のサイズ・レイアウトには変更を加えていません。
 
 style_mobile_fixed_v2.css
 コード
+https://mecho-wuwa-community-site.mecho-wuwa-community.workers.dev/
+背景が消えました
+どういうことですか
+
+
+42s考えました
+すみません。原因は、私が前回出力したCSSそのものが背景画像を削除したわけではありません。
+
+確認したところ、前回の修正版 style_mobile_fixed_v2.css と元の style (7).css を比較しても、page1.jpg、page2.jpg、page3.jpg などの背景指定は変更されていません。たとえば元の背景指定はそのまま残っています。
+
+ただし、今回の症状から見ると、CSSファイルの差し替え方か、デプロイされた style.css の状態に問題がある可能性が高いです。
+
+特に重要なのが、HTMLは現在、
+
+<link rel="stylesheet" href="style.css">
+
+を読み込んでいます。
+
+つまり、私が作った
+
+style_mobile_fixed_v2.css
+という名前のファイルをそのままアップロードしても、サイトはそれを読み込みません。
+
+まず確認してほしいこと
+GitHubのリポジトリで、
+
+style.css
+が実際に存在しているか確認してください。
+
+そして、今回の修正版を使う場合は、
+
+style_mobile_fixed_v2.css
+ではなく、
+
+style.css
+として配置する必要があります。
+
+ただし、今すぐ上書きするのはおすすめしません。
+
+今回の「背景が消えた」という問題をこちらで確実に直すため、次は
+
+現在GitHubに置いている実際の style.css
+
+をアップロードしてください。
+
+それを元に、
+
+PC版は一切変更しない
+スマホ版の指定タイトルだけ36px
+セクション見出しは元サイズ
+CHANNEL GUIDEだけスマホ用縦レイアウト
+page1.jpg / page2.jpg / page3.jpg 等の背景を完全維持
+その他の既存デザイン・レイアウトを変更しない
+という条件で、実際に現在サイトで使っているCSSを直接修正した完成版を作ります。
+
+今回の件については、こちらの前回のファイル出力が原因になった可能性を含めて、いったん前回の修正版は使わないでください。
+
 
 
 
