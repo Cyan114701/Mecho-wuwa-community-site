@@ -183,9 +183,27 @@ document.querySelectorAll('.channelItem').forEach(btn=>{
     if(window.matchMedia('(hover:hover)').matches)renderChannel(btn.dataset.channel);
   });
 
-  btn.addEventListener('click',()=>renderChannel(btn.dataset.channel));
-});
+  btn.addEventListener('click',()=>{
+    renderChannel(btn.dataset.channel);
 
+    // スマホ版のみ、CHANNEL GUIDEの紹介部分までスクロール
+    if(window.matchMedia('(max-width:600px)').matches){
+      const preview=document.querySelector('.channelPreview');
+
+      if(preview){
+        setTimeout(()=>{
+          const offset=20;
+          const top=preview.getBoundingClientRect().top+window.scrollY-offset;
+
+          window.scrollTo({
+            top:top,
+            behavior:'smooth'
+          });
+        },100);
+      }
+    }
+  });
+});
 
 // ============================================================
 // Gallery
