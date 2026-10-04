@@ -578,8 +578,9 @@ footer{padding:28px 6vw;background:#100c09;color:#8e8274;display:flex;gap:22px;a
 @media(max-width:600px){
 
   /* COMMUNITY EVENTS:
-     Keep the photo at the very bottom of the section and
-     blend/fade it into the section background toward the top. */
+     Place the image at the bottom-right of the section.
+     The image is strongest on the right and gradually
+     blends into the background toward the left. */
   .event{
     padding-bottom:0;
     overflow:hidden;
@@ -589,6 +590,7 @@ footer{padding:28px 6vw;background:#100c09;color:#8e8274;display:flex;gap:22px;a
     grid-template-columns:1fr;
     gap:28px;
     min-height:0;
+    align-items:end;
   }
 
   .eventPhoto{
@@ -597,36 +599,40 @@ footer{padding:28px 6vw;background:#100c09;color:#8e8274;display:flex;gap:22px;a
     min-width:0;
     min-height:360px;
     height:360px;
-    margin-bottom:0;
+    margin:0 0 0 auto;
     background-position:center;
     background-size:cover;
     border:0;
+    justify-self:end;
+    align-self:end;
 
-    /* Image remains strongest at the bottom and gradually
-       blends into the event background toward the top. */
     -webkit-mask-image:linear-gradient(
-      to top,
-      #000 0%,
-      #000 34%,
-      rgba(0,0,0,.82) 52%,
-      rgba(0,0,0,.35) 76%,
-      transparent 100%
+      to right,
+      transparent 0%,
+      rgba(0,0,0,.18) 16%,
+      rgba(0,0,0,.45) 32%,
+      rgba(0,0,0,.78) 52%,
+      #000 72%,
+      #000 100%
     );
     mask-image:linear-gradient(
-      to top,
-      #000 0%,
-      #000 34%,
-      rgba(0,0,0,.82) 52%,
-      rgba(0,0,0,.35) 76%,
-      transparent 100%
+      to right,
+      transparent 0%,
+      rgba(0,0,0,.18) 16%,
+      rgba(0,0,0,.45) 32%,
+      rgba(0,0,0,.78) 52%,
+      #000 72%,
+      #000 100%
     );
   }
 
   .eventPhoto::after{
     background:linear-gradient(
-      to top,
-      #25170c33 0%,
-      transparent 70%
+      to right,
+      #25170c 0%,
+      #25170c88 28%,
+      #25170c22 58%,
+      transparent 82%
     );
   }
 
@@ -637,4 +643,3 @@ footer{padding:28px 6vw;background:#100c09;color:#8e8274;display:flex;gap:22px;a
     line-height:1.05;
   }
 }
-
