@@ -281,8 +281,8 @@ footer{padding:28px 6vw;background:#100c09;color:#8e8274;display:flex;gap:22px;a
 }
 .gallerySet{gap:21px;padding-right:21px}
 .gallerySet img{
-  width:540px;
-  height:303.75px;
+  width:656px;
+  height:369px;
   aspect-ratio:16 / 9;
   object-fit:cover;
   object-position:center;
