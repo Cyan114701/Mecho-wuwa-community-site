@@ -536,16 +536,18 @@ footer{padding:28px 6vw;background:#100c09;color:#8e8274;display:flex;gap:22px;a
   /* Let the preview grow with its text instead of clipping it. */
   .channelPreview{
     min-height:520px;
-    height:auto;
+    height:520px;
     overflow:hidden;
+    scroll-margin-top:82px;
   }
 
   .channelPreviewContent{
-    position:relative;
-    inset:auto;
+    position:absolute;
+    z-index:2;
+    inset:auto 24px 28px;
     width:auto;
-    min-height:520px;
-    padding:220px 24px 30px;
+    min-height:0;
+    padding:0;
   }
 
   .channelPreviewContent h3{
