@@ -12,7 +12,7 @@ header nav{display:flex;gap:26px;font-size:10px;letter-spacing:2px}header nav a{
 .langSwitch{display:flex;align-items:center;gap:5px;font-size:9px;letter-spacing:.5px;white-space:nowrap}
 .langSwitch span{opacity:.45}.langBtn{border:0;background:transparent;color:#fff;padding:5px 2px;cursor:pointer;font:inherit;opacity:.55}.langBtn.active{opacity:1;font-weight:700}
 .hero{height:100svh;min-height:680px;position:relative;display:grid;place-items:center;color:#fff;overflow:hidden}
-.bg{position:absolute;inset:0;background:url('assets/page.1.jpg') center/cover no-repeat;transform:scale(1.025)}
+.bg{position:absolute;inset:0;background:url('assets/page1.jpg') center/cover no-repeat;transform:scale(1.025)}
 .veil{position:absolute;inset:0;background:linear-gradient(#08060355 0%,#08060312 48%,#080603b8 100%)}
 .heroIn{position:relative;z-index:2;text-align:center;width:min(920px,92vw);margin-top:35px}.eyebrow{font-size:10px;letter-spacing:5px;font-weight:700}.gold{color:#a36f37}
 .logo{width:min(720px,95vw);display:block;margin:0 auto 4px;filter:drop-shadow(0 14px 30px #0007)}
