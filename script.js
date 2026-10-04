@@ -648,3 +648,108 @@ async function stats(){
 
 
 stats();
+// ============================================================
+// Gallery protection
+// 右クリック・ドラッグ・選択・長押し保存対策
+// ============================================================
+
+function isGalleryElement(target){
+  return !!target?.closest?.(
+    '.galleryViewport, .galleryLightbox'
+  );
+}
+
+// ------------------------------------------------------------
+// 右クリックメニューを禁止
+// ------------------------------------------------------------
+
+document.addEventListener('contextmenu',e=>{
+  if(isGalleryElement(e.target)){
+    e.preventDefault();
+  }
+},true);
+
+
+// ------------------------------------------------------------
+// 画像ドラッグを禁止
+// ------------------------------------------------------------
+
+document.addEventListener('dragstart',e=>{
+  if(isGalleryElement(e.target)){
+    e.preventDefault();
+  }
+},true);
+
+
+// ------------------------------------------------------------
+// テキスト・画像選択を禁止
+// ------------------------------------------------------------
+
+document.addEventListener('selectstart',e=>{
+  if(isGalleryElement(e.target)){
+    e.preventDefault();
+  }
+},true);
+
+
+// ------------------------------------------------------------
+// コピーを禁止
+// ギャラリー内で選択・コピーされた場合のみ
+// ------------------------------------------------------------
+
+document.addEventListener('copy',e=>{
+  if(isGalleryElement(e.target)){
+    e.preventDefault();
+  }
+},true);
+
+
+// ------------------------------------------------------------
+// スマートフォンの長押し保存対策
+// ------------------------------------------------------------
+
+let galleryLongPressTimer=null;
+
+document.addEventListener('pointerdown',e=>{
+  if(e.pointerType!=='touch')return;
+
+  const target=e.target.closest?.(
+    '.galleryViewport img, .galleryLightbox img'
+  );
+
+  if(!target)return;
+
+  clearTimeout(galleryLongPressTimer);
+
+  galleryLongPressTimer=setTimeout(()=>{
+    galleryLongPressTimer=null;
+  },600);
+},true);
+
+
+// ------------------------------------------------------------
+// 長押し終了時にタイマー解除
+// ------------------------------------------------------------
+
+const cancelGalleryLongPress=()=>{
+  clearTimeout(galleryLongPressTimer);
+  galleryLongPressTimer=null;
+};
+
+document.addEventListener(
+  'pointerup',
+  cancelGalleryLongPress,
+  true
+);
+
+document.addEventListener(
+  'pointercancel',
+  cancelGalleryLongPress,
+  true
+);
+
+document.addEventListener(
+  'pointermove',
+  cancelGalleryLongPress,
+  true
+);
