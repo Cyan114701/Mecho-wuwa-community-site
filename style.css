@@ -705,3 +705,34 @@ footer{padding:28px 6vw;background:#100c09;color:#8e8274;display:flex;gap:22px;a
   }
 }
 
+/* ============================================================
+   MOBILE ONLY: CHANNEL GUIDE text position
+   Based exclusively on the currently attached style (12).css.
+   PC layout remains unchanged.
+   ============================================================ */
+@media(max-width:600px){
+
+  /* Place the channel preview text block at the bottom-left
+     of the image, with all text aligned to the bottom area. */
+  .channelPreviewContent{
+    position:absolute;
+    inset:auto 24px 30px 24px;
+    width:auto;
+    min-height:0;
+    padding:0;
+  }
+
+  .channelPreviewContent .eyebrow{
+    margin-bottom:10px;
+  }
+
+  .channelPreviewContent h3{
+    margin:0 0 14px;
+  }
+
+  .channelPreviewContent p{
+    margin:0;
+    max-width:none;
+  }
+}
+
