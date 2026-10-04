@@ -282,7 +282,10 @@ footer{padding:28px 6vw;background:#100c09;color:#8e8274;display:flex;gap:22px;a
 .gallerySet{gap:21px;padding-right:21px}
 .gallerySet img{
   width:540px;
-  height:369px;
+  height:303.75px;
+  aspect-ratio:16 / 9;
+  object-fit:cover;
+  object-position:center;
   cursor:zoom-in;
   flex:none;
   user-select:none;
@@ -411,10 +414,33 @@ footer{padding:28px 6vw;background:#100c09;color:#8e8274;display:flex;gap:22px;a
 }
 @media(max-width:600px){
   .gallerySet{gap:14px;padding-right:14px}
-  .gallerySet img{width:450px;height:316px}
-  .galleryLightbox{padding:4vh 3vw}
-  .galleryLightbox img{max-width:94vw;max-height:86vh}
-  .galleryLightboxClose{top:14px;right:14px}
+ @media(max-width:600px){
+  .gallerySet{
+    gap:14px;
+    padding-right:14px;
+  }
+
+  .gallerySet img{
+    width:450px;
+    height:253.125px;
+    aspect-ratio:16 / 9;
+    object-fit:cover;
+    object-position:center;
+  }
+
+  .galleryLightbox{
+    padding:4vh 3vw;
+  }
+
+  .galleryLightbox img{
+    max-width:94vw;
+    max-height:86vh;
+  }
+
+  .galleryLightboxClose{
+    top:14px;
+    right:14px;
+  }
 }
 
 /* Keep the intended COMMUNITY EVENTS line break on larger screens. */
