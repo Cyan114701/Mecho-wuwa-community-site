@@ -74,7 +74,7 @@ const I18N={
     'guide.06.name':'Voice Channels',
     'guide.06.text':'The chat rooms include a channel for finding people to call with,<br>as well as a room for viewers who prefer to watch streams and<br>comment through a read-aloud bot.<br>Voice channels include rooms for Wuthering Waves, other games,<br>and a dedicated workspace for everyday tasks.<br>Many members join VC every day to chat and play together.<br>Come enjoy multiplayer sessions and streams with the community.',
     'guide.07.name':'? ? ?',
-    'guide.07.text':'Some channels become visible when you are assigned specific roles. <br>If you are interested, feel free to check them out.',
+    'guide.07.text':'Some channels become visible when you are assigned specific roles. If you are interested, feel free to check them out.',
 
     'gallery.title':'Capture the world.','gallery.desc':'Beautiful scenes from Wuthering Waves, shared as part of the community.<br>Featuring photos shared by our community members.',
     'staff.title':'Community Staff',
