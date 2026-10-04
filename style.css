@@ -536,18 +536,16 @@ footer{padding:28px 6vw;background:#100c09;color:#8e8274;display:flex;gap:22px;a
   /* Let the preview grow with its text instead of clipping it. */
   .channelPreview{
     min-height:520px;
-    height:520px;
+    height:auto;
     overflow:hidden;
-    scroll-margin-top:82px;
   }
 
   .channelPreviewContent{
-    position:absolute;
-    z-index:2;
-    inset:auto 24px 28px;
+    position:relative;
+    inset:auto;
     width:auto;
-    min-height:0;
-    padding:0;
+    min-height:520px;
+    padding:220px 24px 30px;
   }
 
   .channelPreviewContent h3{
@@ -572,3 +570,71 @@ footer{padding:28px 6vw;background:#100c09;color:#8e8274;display:flex;gap:22px;a
     white-space:normal;
   }
 }
+
+/* ============================================================
+   MOBILE UPDATE: COMMUNITY EVENTS / JOIN THE COMMUNITY
+   PC layout/assets remain unchanged.
+   ============================================================ */
+@media(max-width:600px){
+
+  /* COMMUNITY EVENTS:
+     Keep the photo at the very bottom of the section and
+     blend/fade it into the section background toward the top. */
+  .event{
+    padding-bottom:0;
+    overflow:hidden;
+  }
+
+  .eventIn{
+    grid-template-columns:1fr;
+    gap:28px;
+    min-height:0;
+  }
+
+  .eventPhoto{
+    order:2;
+    width:100%;
+    min-width:0;
+    min-height:360px;
+    height:360px;
+    margin-bottom:0;
+    background-position:center;
+    background-size:cover;
+    border:0;
+
+    /* Image remains strongest at the bottom and gradually
+       blends into the event background toward the top. */
+    -webkit-mask-image:linear-gradient(
+      to top,
+      #000 0%,
+      #000 34%,
+      rgba(0,0,0,.82) 52%,
+      rgba(0,0,0,.35) 76%,
+      transparent 100%
+    );
+    mask-image:linear-gradient(
+      to top,
+      #000 0%,
+      #000 34%,
+      rgba(0,0,0,.82) 52%,
+      rgba(0,0,0,.35) 76%,
+      transparent 100%
+    );
+  }
+
+  .eventPhoto::after{
+    background:linear-gradient(
+      to top,
+      #25170c33 0%,
+      transparent 70%
+    );
+  }
+
+  /* JOIN THE COMMUNITY:
+     Make the title smaller so each explicit line fits cleanly. */
+  .join h2{
+    font-size:30px;
+    line-height:1.05;
+  }
+}
+
