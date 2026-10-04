@@ -288,6 +288,31 @@ footer{padding:28px 6vw;background:#100c09;color:#8e8274;display:flex;gap:22px;a
   user-select:none;
   -webkit-user-drag:none;
 }
+/* ============================================================
+   Gallery protection
+   ============================================================ */
+
+.galleryViewport,
+.galleryViewport img,
+.galleryLightbox,
+.galleryLightbox img{
+  -webkit-user-select:none;
+  user-select:none;
+  -webkit-touch-callout:none;
+}
+
+.galleryViewport img,
+.galleryLightbox img{
+  -webkit-user-drag:none;
+  user-drag:none;
+}
+
+.galleryViewport::selection,
+.galleryViewport img::selection,
+.galleryLightbox::selection,
+.galleryLightbox img::selection{
+  background:transparent;
+}
 .gallerySet img:active{cursor:grabbing}
 
 /* Gallery lightbox */
