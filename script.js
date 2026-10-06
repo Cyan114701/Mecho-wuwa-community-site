@@ -70,7 +70,7 @@ const I18N={
   'guide.04.name':'Research Lab',
   'guide.04.text':'Discuss team rotations and solo-clear strategies with members in a forum-style format.<br>We research everything from the drive to become stronger and improve, to niche gameplay strategies and optimization information.',
   'guide.05.name':'Wuthering Waves Photo Club',
-  'guide.05.text':'A channel for sharing carefully composed photos capturing the world of Wuthering Waves.<br>Share the beautiful world of Solaris with your fellow community members.',
+  'guide.05.text':'A channel for sharing carefully composed photos capturing the world of Wuthering Waves. Share the beautiful world of Solaris with your fellow community members.',
   'guide.06.name':'Voice Channels',
   'guide.06.text':'The chat rooms include a channel for finding people to call with, as well as a room for viewers who prefer to watch streams and<br>comment through a read-aloud bot.<br>Voice channels include rooms for Wuthering Waves, other games, and a dedicated workspace for everyday tasks.<br>Many members join VC every day to chat and interact with others.<br>Come enjoy multiplayer sessions and streams with your fellow community members.',
   'guide.07.name':'???',
