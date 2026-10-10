@@ -736,3 +736,15 @@ footer{padding:28px 6vw;background:#100c09;color:#8e8274;display:flex;gap:22px;a
   }
 }
 
+
+/* MOBILE ONLY: soften the dark overlay on CHANNEL GUIDE preview images */
+@media(max-width:600px){
+  .channelPreviewVeil{
+    background:linear-gradient(
+      90deg,
+      rgba(11,8,6,.42) 0%,
+      rgba(11,8,6,.24) 55%,
+      rgba(11,8,6,.08) 100%
+    );
+  }
+}
