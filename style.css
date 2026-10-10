@@ -741,7 +741,7 @@ footer{padding:28px 6vw;background:#100c09;color:#8e8274;display:flex;gap:22px;a
 @media(max-width:600px){
   .channelPreviewVeil{
     background:linear-gradient(
-      180deg,
+      0deg,
       #0b0806dd 0%,
       #0b080688 55%,
       #0b080633 100%
