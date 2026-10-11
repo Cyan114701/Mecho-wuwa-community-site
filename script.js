@@ -9,7 +9,7 @@ const I18N={
     'hero.statsSub':'Japanese / English · Wuthering Waves','stats.members':'MEMBERS','stats.online':'ONLINE',
 
     'about.title':'鳴潮の<em>"好き"</em>を極める<br>コミュニティ。',
-    'about.desc':'攻略のさらなる高みへの挑戦から、こだわりの写真、気軽な雑談まで、<br>「好き」を持ち寄って遊べるDiscordコミュニティです。',
+    'about.desc':'攻略のさらなる高みへの挑戦から、こだわりの写真、気軽な雑談まで、"好き"を持ち寄って遊べるDiscordコミュニティです。',
     'features.research.title':'🎮 研究学会','features.research.text':'単騎攻略、ローテーション研究、ビルド考察。',
     'features.photo.title':'📸 鳴潮写真部','features.photo.text':'可憐な推しから、美麗な風景まで。',
     'features.talk.title':'💬 雑談・交流','features.talk.text':'ゲームだけに囚われない、脱線だらけの雑談も。',
