@@ -1,4 +1,4 @@
-const CONFIG={INVITE_URL:'https://discord.gg/G7ZAUPTmb',SERVER_ID:'1499001483742543962'};
+const CONFIG={INVITE_URL:'https://discord.gg/yAhS57XfV',SERVER_ID:'1499001483742543962'};
 
 const I18N={
   ja:{
